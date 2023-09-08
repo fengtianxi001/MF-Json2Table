@@ -1,10 +1,16 @@
 <template>
   <div class="page">
+    {{ filterConfigs }}
     <BaseCard title="JSON-2-TABLE">
       <template #extra>
-        <BaseColumnModal />
+        <BaseColumnModal :data="data" />
       </template>
-      <BaseFilter v-model="filter" :configs="filterConfigs" :query="query" />
+      <BaseFilter
+        v-if="!isEmpty(filterConfigs)"
+        v-model="filter"
+        :configs="filterConfigs"
+        :query="query"
+      />
       <div>
         <Button type="primary" @click="actions.onImport">导入数据</Button>
       </div>
@@ -20,7 +26,7 @@ import BaseCard from '@/components/BaseCard.vue'
 import BaseFilter from '@/components/BaseFilter.vue'
 import BaseColumnModal from '@/components/BaseColumnModal.vue'
 import BaseTable from '@/components/BaseTable.vue'
-import { isArray, isObject } from 'lodash'
+import { first, isArray, isEmpty, isObject, map, sample } from 'lodash'
 import dayjs from 'dayjs'
 
 const filter = ref<any>({})
@@ -66,14 +72,27 @@ const query = async () => {
   console.log('cache', cache)
 }
 
-const columns = computed(() =>
-  source.value.map((item) => ({
-    title: item.label,
-    dataIndex: item.name,
-    ellipsis: true,
-    tooltip: true,
-  }))
-)
+const columns = computed(() => {
+  const example = first(total.value) ?? {}
+  const exampleKeys = Object.keys(example)
+  return exampleKeys.map((key: string) => {
+    const finder: any = source.value.find((config: any) => config.name === key)
+    if (finder) {
+      return {
+        title: finder.label,
+        dataIndex: finder.name,
+        ellipsis: true,
+        tooltip: true,
+      }
+    }
+    return {
+      title: key,
+      dataIndex: key,
+      ellipsis: true,
+      tooltip: true,
+    }
+  })
+})
 
 const actions = {
   onImport() {
@@ -97,7 +116,11 @@ const actions = {
           } else {
             Message.error('数据格式出错')
           }
-          query()
+          if (isEmpty(filterConfigs.value)) {
+            data.value = [...total.value]
+          } else {
+            query()
+          }
         }
         reader.readAsText(file)
       }

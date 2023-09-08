@@ -7,15 +7,11 @@
     :footer="false"
     :mask-closable="false"
   >
-    <div style="margin-bottom: 10px">
+    <Space style="margin-bottom: 10px">
       <Button type="primary" @click="actions.onCreate">新增一行</Button>
-    </div>
-    <BaseTable
-      :columns="columns"
-      :data="source"
-      :pagination="false"
-      style="min-height: 400px"
-    >
+      <Button type="primary" @click="actions.onGenerate"> 通过数据生成 </Button>
+    </Space>
+    <BaseTable :columns="columns" :data="source" :pagination="false">
       <template #name="{ rowIndex }">
         <Input v-model="source[rowIndex].name" />
       </template>
@@ -48,11 +44,17 @@ import {
   Modal,
   Input,
   Select,
-  Switch,
+  Space,
   Option,
 } from '@arco-design/web-vue'
 import BaseTable from '@/components/BaseTable.vue'
 import { columns as source } from '@/stores/columns'
+import { first } from 'lodash'
+
+interface PropsType {
+  data: any[]
+}
+const props = defineProps<PropsType>()
 
 const visible = ref(false)
 
@@ -92,6 +94,15 @@ const actions = {
       isFilter: '否',
       valueType: 'Input',
     })
+  },
+  onGenerate() {
+    const example = first(props.data)
+    source.value = Object.keys(example).map((key: any) => ({
+      name: key,
+      label: key,
+      isFilter: '否',
+      valueType: 'Input',
+    }))
   },
   onDelete(index: number) {
     source.value.splice(index, 1)

@@ -8,12 +8,5 @@ interface ColumnType {
 }
 
 export const columns = useLocalStorageState<ColumnType[]>('app-columns', {
-  defaultValue: [
-    {
-      name: 'name',
-      label: '名称',
-      isFilter: '是',
-      valueType: 'Input',
-    },
-  ],
+  defaultValue: [],
 })

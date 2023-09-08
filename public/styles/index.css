@@ -1,0 +1,11 @@
+* {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  text-decoration: none;
+  font-style: normal;
+}
+
+.arco-modal-body {
+  padding: 16px !important;
+}

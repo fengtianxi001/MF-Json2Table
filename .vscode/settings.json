@@ -1,0 +1,15 @@
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true,
+    "source.fixAll.stylelint": true,
+    "source.fixAll.markdownlint": true
+  },
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.expand": false,
+  "explorer.fileNesting.patterns": {
+    "package.json": ".env*,.eslint*,package*,.prettier*,.stylelint*,commitlint*,pnpm*,ts*,yarn*,.git*,index.html,nginx.conf,Dockerfile,docker-compose.yml,.yarnrc,*.d.ts,README.md,vite.config.ts"
+  },
+  "vue.codeActions.enabled": false
+}

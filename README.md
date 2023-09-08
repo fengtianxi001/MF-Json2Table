@@ -2,7 +2,7 @@
 
 > 这是一个将JSON数据转换成表格的WEB小工具
 
-> 服务地址： <https://fengtianxi001.github.io/mf-json2table/>
+> 服务地址：<https://fengtianxi001.github.io/MF-Json2Table/>
 
 <h1 align="center">
   <img src="./screenshot.png" title="mf-gif">

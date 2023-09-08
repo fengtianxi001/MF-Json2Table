@@ -1,6 +1,5 @@
 <template>
   <div class="page">
-    {{ filterConfigs }}
     <BaseCard title="JSON-2-TABLE">
       <template #extra>
         <BaseColumnModal :data="data" />

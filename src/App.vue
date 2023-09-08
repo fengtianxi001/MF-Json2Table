@@ -29,6 +29,7 @@ import { first, isArray, isEmpty, isObject, map, sample } from 'lodash'
 import dayjs from 'dayjs'
 
 const filter = ref<any>({})
+
 const filterConfigs = computed<any[]>(() => {
   const cache = source.value.filter((item) => item.isFilter === '是')
   return cache.map((item) => ({
@@ -47,7 +48,7 @@ const query = async () => {
         if (!value) {
           return true
         }
-        return item[key] === value
+        return item[key].includes(value)
       }),
     RangePicker: (source: any, key: any, value: any) =>
       source.filter((item: any) => {
